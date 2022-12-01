@@ -1,4 +1,5 @@
-import React, {useCallback} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useCallback, useEffect} from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
@@ -9,8 +10,25 @@ import {RootState} from '../store/reducer';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 function Settings() {
+  const money = useSelector((state: RootState) => state.user.money);
+  const name = useSelector((state: RootState) => state.user.name);
+
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    async function getMoney() {
+      const response = await axios.get<{data: number}>(
+        `${Config.API_URL}/showmethemoney`,
+        {
+          headers: {authorization: `Bearer ${accessToken}`},
+        },
+      );
+      dispatch(userSlice.actions.setMoney(response.data.data));
+    }
+    getMoney();
+  }, [accessToken, dispatch]);
+
   const onLogout = useCallback(async () => {
     try {
       await axios.post(
@@ -23,13 +41,7 @@ function Settings() {
         },
       );
       Alert.alert('알림', '로그아웃 되었습니다.');
-      dispatch(
-        userSlice.actions.setUser({
-          name: '',
-          email: '',
-          accessToken: '',
-        }),
-      );
+      dispatch(userSlice.actions.logOutUser());
       await EncryptedStorage.removeItem('refreshToken');
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
@@ -39,9 +51,21 @@ function Settings() {
 
   return (
     <View>
+      <View style={styles.money}>
+        <Text style={styles.moneyText}>
+          {name}님의 수익금{' '}
+          <Text style={{fontWeight: 'bold'}}>
+            {money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
+          원
+        </Text>
+      </View>
       <View style={styles.buttonZone}>
         <Pressable
-          style={[styles.loginButton, styles.loginButtonActive]}
+          style={StyleSheet.compose(
+            styles.loginButton,
+            styles.loginButtonActive,
+          )}
           onPress={onLogout}>
           <Text style={styles.loginButtonText}>로그아웃</Text>
         </Pressable>
@@ -51,6 +75,12 @@ function Settings() {
 }
 
 const styles = StyleSheet.create({
+  money: {
+    padding: 20,
+  },
+  moneyText: {
+    fontSize: 16,
+  },
   buttonZone: {
     alignItems: 'center',
     paddingTop: 20,
