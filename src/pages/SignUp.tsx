@@ -71,7 +71,10 @@ function SignUp({navigation}: SignUpScreenProps) {
         name,
         password,
       });
-      console.log(response);
+      console.log(response.data);
+
+      Alert.alert('알림', '회원가입 되었습니다.');
+      navigation.navigate('SignIn');
     } catch (error) {
       const errorResponse = (error as AxiosError<{message: string}>).response;
       console.error(errorResponse);
@@ -81,7 +84,6 @@ function SignUp({navigation}: SignUpScreenProps) {
     } finally {
       setLoading(false);
     }
-    navigation.navigate('SignIn');
   }, [loading, email, name, password, navigation]);
 
   const canGoNext = email && name && password;
