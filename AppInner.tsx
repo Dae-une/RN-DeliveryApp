@@ -10,7 +10,7 @@ import axios, {AxiosError} from 'axios';
 import {useAppDispatch} from './src/store';
 import Config from 'react-native-config';
 import userSlice from './src/slices/user';
-import orderSlice from './src/slices/oreder';
+import orderSlice from './src/slices/order';
 import {Alert} from 'react-native';
 
 import Settings from './src/pages/Settings';
