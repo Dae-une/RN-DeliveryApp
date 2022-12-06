@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {JSXElementConstructor, ReactElement} from 'react';
 import {
   TouchableWithoutFeedback,
   Keyboard,
@@ -9,7 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 const DismissKeyboardView: React.FC<{
   style?: StyleProp<ViewStyle>;
-  children: ReactElement;
+  children: ReactElement<any, string | JSXElementConstructor<any>>[];
 }> = ({children, ...props}) => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <KeyboardAwareScrollView {...props} style={props.style}>
