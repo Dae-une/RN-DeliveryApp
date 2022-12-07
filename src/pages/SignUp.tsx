@@ -68,7 +68,7 @@ function SignUp({navigation}: SignUpScreenProps) {
     try {
       setLoading(true);
       console.log(Config.API_URL);
-      const response = await axios.post(`${Config.API_URL}/user`, {
+      await axios.post(`${Config.API_URL}/user`, {
         email,
         name,
         password,
@@ -84,7 +84,7 @@ function SignUp({navigation}: SignUpScreenProps) {
     } finally {
       setLoading(false);
     }
-  }, [loading, email, name, password]);
+  }, [navigation, loading, email, name, password]);
 
   const canGoNext = email && name && password;
   return (
