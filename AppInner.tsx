@@ -82,7 +82,6 @@ function AppInner() {
 
   useEffect(() => {
     const callback = (data: any) => {
-      console.log(data);
       dispatch(orderSlice.actions.addOrder(data));
     };
 
@@ -99,7 +98,6 @@ function AppInner() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      console.log('!isLoggedIn', !isLoggedIn);
       disconnect();
     }
   }, [isLoggedIn, disconnect]);
