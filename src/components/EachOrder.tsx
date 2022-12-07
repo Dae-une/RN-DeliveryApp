@@ -14,6 +14,7 @@ import Config from 'react-native-config';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
+import getDistanceFromLatLonInKm from '../utils/getDistance';
 
 interface Props {
   item: Order;
@@ -51,7 +52,15 @@ function EachOrder({item}: Props) {
     <View style={styles.orderContainer}>
       <Pressable onPress={toggleDetail} style={styles.info}>
         <Text>XX동</Text>
-        <Text>km</Text>
+        <Text>
+          {getDistanceFromLatLonInKm(
+            start.latitude,
+            start.longitude,
+            end.latitude,
+            end.longitude,
+          ).toFixed(1)}
+          km
+        </Text>
         <Text>
           {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
         </Text>
