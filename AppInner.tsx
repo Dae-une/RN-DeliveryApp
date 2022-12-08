@@ -43,10 +43,10 @@ function AppInner() {
   const [socket, disconnect] = useSocket();
 
   usePermissions();
-
+  console.log(EncryptedStorage.getItem('refreshToken'));
   useEffect(() => {
     axios.interceptors.request.use(config => {
-      if (config.headers && accessToken) {
+      if (config.headers && accessToken && !config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
       return config;
@@ -69,11 +69,11 @@ function AppInner() {
             const {data} = await axios.post(
               `${Config.API_URL}/refreshToken`, // token refresh api
               {},
-              {headers: {Authorization: `Bearer ${refreshToken}`}},
+              {headers: {authorization: `Bearer ${refreshToken}`}},
             );
             // 새로운 토큰 저장
             dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
-            originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
+            originalRequest.headers.authorization = `Bearer ${data.data.accessToken}`;
             // 419로 요청 실패했던 요청 새로운 토큰으로 재요청
             return axios(originalRequest);
           }

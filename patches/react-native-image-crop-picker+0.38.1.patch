@@ -1,0 +1,134 @@
+diff --git a/node_modules/react-native-image-crop-picker/index.d.ts b/node_modules/react-native-image-crop-picker/index.d.ts
+index b1fcef9..b92d521 100644
+--- a/node_modules/react-native-image-crop-picker/index.d.ts
++++ b/node_modules/react-native-image-crop-picker/index.d.ts
+@@ -161,6 +161,12 @@ declare module "react-native-image-crop-picker" {
+          */
+         includeBase64?: boolean;
+ 
++        /**
++         * when set to true, the image file content will be saved to user file system
++         * 
++         * @default false
++         */
++        saveToPhotos?:boolean;
+         /**
+          * Include image exif data in the response.
+          *
+diff --git a/node_modules/react-native-image-crop-picker/ios/.DS_Store b/node_modules/react-native-image-crop-picker/ios/.DS_Store
+new file mode 100644
+index 0000000..936ce4b
+Binary files /dev/null and b/node_modules/react-native-image-crop-picker/ios/.DS_Store differ
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist
+new file mode 100644
+index 0000000..ffa3025
+--- /dev/null
++++ b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++	<key>SchemeUserState</key>
++	<dict>
++		<key>Build QBImagePicker.xcscheme_^#shared#^_</key>
++		<dict>
++			<key>orderHint</key>
++			<integer>1</integer>
++		</dict>
++		<key>QBImagePicker.xcscheme_^#shared#^_</key>
++		<dict>
++			<key>orderHint</key>
++			<integer>0</integer>
++		</dict>
++	</dict>
++</dict>
++</plist>
+diff --git a/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/contents.xcworkspacedata b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+new file mode 100644
+index 0000000..919434a
+--- /dev/null
++++ b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<Workspace
++   version = "1.0">
++   <FileRef
++      location = "self:">
++   </FileRef>
++</Workspace>
+diff --git a/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+new file mode 100644
+index 0000000..18d9810
+--- /dev/null
++++ b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++	<key>IDEDidComputeMac32BitWarning</key>
++	<true/>
++</dict>
++</plist>
+diff --git a/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcuserdata/daeeun.xcuserdatad/UserInterfaceState.xcuserstate b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcuserdata/daeeun.xcuserdatad/UserInterfaceState.xcuserstate
+new file mode 100644
+index 0000000..546750c
+Binary files /dev/null and b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.xcworkspace/xcuserdata/daeeun.xcuserdatad/UserInterfaceState.xcuserstate differ
+diff --git a/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist
+new file mode 100644
+index 0000000..3f3cfb5
+--- /dev/null
++++ b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/xcuserdata/daeeun.xcuserdatad/xcschemes/xcschememanagement.plist
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++	<key>SchemeUserState</key>
++	<dict>
++		<key>imageCropPicker.xcscheme_^#shared#^_</key>
++		<dict>
++			<key>orderHint</key>
++			<integer>2</integer>
++		</dict>
++	</dict>
++</dict>
++</plist>
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+index 7101410..00616a0 100644
+--- a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
++++ b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+@@ -69,6 +69,7 @@ RCT_EXPORT_MODULE();
+             @"mediaType": @"any",
+             @"showsSelectedCount": @YES,
+             @"forceJpg": @NO,
++            @"saveToPhotos":@NO,
+             @"sortOrder": @"none",
+             @"cropperCancelText": @"Cancel",
+             @"cropperChooseText": @"Choose",
+@@ -188,8 +189,14 @@ RCT_EXPORT_METHOD(openCamera:(NSDictionary *)options
+     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+         NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
+         AVURLAsset *asset = [AVURLAsset assetWithURL:url];
++        NSString *moviePath = [url path];
+         NSString *fileName = [[asset.URL path] lastPathComponent];
+         
++        if([[self.options objectForKey:@"saveToPohots"]boolValue]){
++            if(UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(moviePath)){
++                UISaveVideoAtPathToSavedPhotosAlbum(moviePath,nil,nil,nil);
++            }
++        }
+         [self handleVideo:asset
+              withFileName:fileName
+       withLocalIdentifier:nil
+@@ -215,6 +222,9 @@ RCT_EXPORT_METHOD(openCamera:(NSDictionary *)options
+         if([[self.options objectForKey:@"includeExif"] boolValue]) {
+             exif = [info objectForKey:UIImagePickerControllerMediaMetadata];
+         }
++        if([[self.options objectForKey:@"saveToPhotos"] boolValue]){
++            UIImageWriteToSavedPhotosAlbum(chosenImage,nil,nil,nil);
++        }
+         
+         [self processSingleImagePick:chosenImage withExif:exif withViewController:picker withSourceURL:self.croppingFile[@"sourceURL"] withLocalIdentifier:self.croppingFile[@"localIdentifier"] withFilename:self.croppingFile[@"filename"] withCreationDate:self.croppingFile[@"creationDate"] withModificationDate:self.croppingFile[@"modificationDate"]];
+     }
